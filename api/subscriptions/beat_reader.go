@@ -8,6 +8,13 @@ package subscriptions
 import (
 	"bytes"
 
+<<<<<<< HEAD
+=======
+	Block "github.com/dfinlab/meter/block"
+	"github.com/dfinlab/meter/chain"
+	"github.com/dfinlab/meter/meter"
+	"github.com/dfinlab/meter/meter/bloom"
+>>>>>>> fc083ee506e7e67f859b3478c4b8d1ac74e730b9
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/meterio/meter-pov/chain"
 	"github.com/meterio/meter-pov/meter"
@@ -65,14 +72,36 @@ func (br *beatReader) Read() ([]interface{}, bool, error) {
 		for _, item := range bloomContent.items {
 			bloom.Add(item)
 		}
+
+		var epoch uint64
+		isKBlock := (header.BlockType() == Block.BLOCK_TYPE_K_BLOCK)
+		if isKBlock {
+			epoch = block.QC.EpochID
+		} else if len(block.CommitteeInfos.CommitteeInfo) > 0 {
+			epoch = block.CommitteeInfos.Epoch
+		} else {
+			epoch = block.QC.EpochID
+		}
+
 		msgs = append(msgs, &BeatMessage{
-			Number:    header.Number(),
-			ID:        header.ID(),
-			ParentID:  header.ParentID(),
-			Timestamp: header.Timestamp(),
-			Bloom:     hexutil.Encode(bloom.Bits[:]),
-			K:         uint32(k),
-			Obsolete:  block.Obsolete,
+			ID:           header.ID(),
+			ParentID:     header.ParentID(),
+			UncleHash:    meter.Bytes32{},
+			Signer:       signer,
+			Beneficiary:  header.Beneficiary(),
+			StateRoot:    header.StateRoot(),
+			TxsRoot:      header.TxsRoot(),
+			ReceiptsRoot: header.ReceiptsRoot(),
+			Bloom:        hexutil.Encode(bloom.Bits[:]),
+			K:            uint32(k),
+			Difficaulty:  hexutil.EncodeUint64(uint64(0)),
+			Number:       hexutil.EncodeUint64(uint64(header.Number())),
+			Timestamp:    header.Timestamp(),
+			GasLimit:     header.GasLimit(),
+			GasUsed:      header.GasUsed(),
+			Extra:        hexutil.Encode([]byte{}),
+			Nonce:        0,
+			Epoch:        epoch,
 		})
 	}
 	return msgs, len(blocks) > 0, nil
