@@ -8,10 +8,10 @@ package subscriptions
 import (
 	"bytes"
 
-	"github.com/dfinlab/meter/chain"
-	"github.com/dfinlab/meter/meter"
-	"github.com/dfinlab/meter/meter/bloom"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/meterio/meter-pov/chain"
+	"github.com/meterio/meter-pov/meter"
+	"github.com/meterio/meter-pov/meter/bloom"
 )
 
 type beatReader struct {
