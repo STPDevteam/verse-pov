@@ -8,14 +8,8 @@ package subscriptions
 import (
 	"bytes"
 
-<<<<<<< HEAD
-=======
-	Block "github.com/dfinlab/meter/block"
-	"github.com/dfinlab/meter/chain"
-	"github.com/dfinlab/meter/meter"
-	"github.com/dfinlab/meter/meter/bloom"
->>>>>>> fc083ee506e7e67f859b3478c4b8d1ac74e730b9
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	Block "github.com/meterio/meter-pov/block"
 	"github.com/meterio/meter-pov/chain"
 	"github.com/meterio/meter-pov/meter"
 	"github.com/meterio/meter-pov/meter/bloom"
