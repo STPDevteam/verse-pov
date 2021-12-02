@@ -197,7 +197,7 @@ func (rt *Runtime) restrictTransfer(stateDB *statedb.StateDB, addr meter.Address
 
 		return availabe.Cmp(needed) < 0
 	} else {
-		// Tesla 1.0 
+		// Tesla 1.0
 		needed := new(big.Int).Add(lockMtrg, amount)
 		return stateDB.GetBalance(common.Address(addr)).Cmp(needed) < 0
 	}
@@ -627,7 +627,6 @@ func (rt *Runtime) PrepareTransaction(tx *tx.Transaction) (*TransactionExecutor,
 			// mint transaction gas is not prepaid, so no reward.
 			if !origin.IsZero() {
 				txFeeBeneficiary := builtin.Params.Native(rt.State()).GetAddress(meter.KeyTransactionFeeAddress)
-				fmt.Println(meter.KeyTransactionFeeAddress.String())
 				if txFeeBeneficiary.IsZero() {
 					fmt.Println("txFee to proposer beneficiary:", "beneficiary", rt.ctx.Beneficiary, "reward", reward.String())
 					rt.state.AddEnergy(rt.ctx.Beneficiary, reward)
